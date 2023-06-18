@@ -2,6 +2,12 @@
 # Проект Mesto фронтенд + бэкенд 
 [Ссылка на проект express-mesto-gha](https://github.com/AsaevArtemV/express-mesto-gha)
 
+## Стек технологий:
+
+* Node.js
+* express.js
+* MongoDB
+* Mongoose
 
 ## Директории
 
