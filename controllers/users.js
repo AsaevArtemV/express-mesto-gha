@@ -13,17 +13,17 @@ const getUserById = (req, res) => {
   User.findById(userId)
     .then((user) => {
       if (!user) {
-        res.status(404).send({ message: `Пользователь по указанному id: ${userId} не найден.` });
+        res.status(404).send({
+          message: `Пользователь по указанному id: ${userId} не найден.`,
+        });
       } else {
         res.status(200).send(user);
       }
     })
-    .catch((err) => {
-      if (err.name === 'UserIdError') {
-        res.status(400).send({ message: `Получение пользователя с некорректным id: ${userId}` });
-      } else {
-        res.status(500).send({ message: 'Ошибка сервера' });
-      }
+    .catch(() => {
+      res.status(400).send({
+        message: `Получение пользователя с некорректным id: ${userId}`,
+      });
     });
 };
 
@@ -87,16 +87,9 @@ const updateAvatar = (req, res) => {
         res.status(200).send(user);
       }
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        res.status(400).send({
-          message: Object.values(err.errors)
-            .map((error) => error.message)
-            .join(', '),
-        });
-      } else {
-        res.status(500).send({ message: 'Ошибка сервера' });
-      }
+    .catch(() => {
+      // eslint-disable-next-line no-console
+      console.error();
     });
 };
 
