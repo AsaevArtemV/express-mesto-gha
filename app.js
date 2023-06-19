@@ -24,11 +24,6 @@ app.use((req, res, next) => {
 
 app.use(routes);
 
-app.use('*', (req, res) => {
-  res.status(404)
-    .json({ message: 'Данная страница не найдена' });
-});
-
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`server is running on port ${PORT}`);

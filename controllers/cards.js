@@ -35,15 +35,19 @@ const deleteCard = (req, res) => {
     .then((card) => {
       if (!card) {
         res.status(404).send({
-          message: `Карточка с указанным id: ${cardId} отсутствует.`,
+          message: `Карточка с указанным id: ${cardId} не найдена.`,
         });
       } else {
         Card.findByIdAndRemove(cardId)
           .then((removedCard) => res.status(200).send(removedCard));
       }
     })
-    .catch(() => {
-      res.status(400).send({ message: `Карточки с указанным id: ${cardId} нет в базе данных.` });
+    .catch((err) => {
+      if (err.name === 'DeleteError') {
+        res.status(400).send({ message: `Карточки с указанным id: ${cardId} нет в базе данных.` });
+      } else {
+        res.status(500).send({ message: 'Ошибка сервера' });
+      }
     });
 };
 
@@ -63,9 +67,12 @@ const likeCard = (req, res) => {
           .then((removedCard) => res.status(200).send(removedCard));
       }
     })
-    .catch(() => {
-      res.status(400)
-        .send({ message: `Карточки с указанным id: ${cardId} нет в базе данных.` });
+    .catch((err) => {
+      if (err.name === 'LikeError') {
+        res.status(400).send({ message: `Карточки с указанным id: ${cardId} нет в базе данных.` });
+      } else {
+        res.status(500).send({ message: 'Ошибка сервера' });
+      }
     });
 };
 
@@ -86,8 +93,12 @@ const deleteLike = (req, res) => {
           .then((removedCard) => res.status(200).send(removedCard));
       }
     })
-    .catch(() => {
-      res.status(400).send({ message: `Карточки с указанным id: ${cardId} нет в базе данных.` });
+    .catch((err) => {
+      if (err.name === 'DeletLikeError') {
+        res.status(400).send({ message: `Карточки с указанным id: ${cardId} нет в базе данных.` });
+      } else {
+        res.status(500).send({ message: 'Ошибка сервера' });
+      }
     });
 };
 
