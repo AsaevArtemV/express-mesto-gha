@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 // eslint-disable-next-line import/no-extraneous-dependencies
 const mongoose = require('mongoose');
 
@@ -17,11 +16,11 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    required: [true, 'Поле "name" должно быть заполнено'],
     validate: {
       validator: (v) => validator.isURL(v),
       message: 'Некорректный URL',
     },
+    required: [true, 'Поле "name" должно быть заполнено'],
   },
 });
 
