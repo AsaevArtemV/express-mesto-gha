@@ -42,8 +42,12 @@ const deleteCard = (req, res) => {
           .then((removedCard) => res.status(200).send(removedCard));
       }
     })
-    .catch(() => {
-      res.status(400).send({ message: `Карточки с указанным id: ${cardId} нет в базе данных.` });
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: `Карточки с указанным id: ${cardId} нет в базе данных.` });
+      } else {
+        res.status(500).send({ message: 'Ошибка сервера' });
+      }
     });
 };
 
