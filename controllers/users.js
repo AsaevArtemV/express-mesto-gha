@@ -20,10 +20,12 @@ const getUserById = (req, res) => {
         res.status(200).send(user);
       }
     })
-    .catch(() => {
-      res.status(400).send({
-        message: `Получение пользователя с некорректным id: ${userId}`,
-      });
+    .catch((err) => {
+      if (err.name === 'UserIdError') {
+        res.status(400).send({ message: `Получение пользователя с некорректным id: ${userId}` });
+      } else {
+        res.status(500).send({ message: 'Ошибка сервера' });
+      }
     });
 };
 
