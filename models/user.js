@@ -18,6 +18,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Поле "name" должно быть заполнено'],
   },
-});
+}, { versionKey: false });
 
 module.exports = mongoose.model('user', userSchema);

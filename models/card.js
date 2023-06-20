@@ -32,6 +32,6 @@ const cardSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-});
+}, { versionKey: false });
 
 module.exports = mangoose.model('card', cardSchema);
