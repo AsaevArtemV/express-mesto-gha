@@ -87,9 +87,16 @@ const updateAvatar = (req, res) => {
         res.status(200).send(user);
       }
     })
-    .catch(() => {
-      // eslint-disable-next-line no-console
-      console.error();
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        res.status(400).send({
+          message: `Пожалуйста, проверьте правильность заполнения полей: ${Object.values(err.errors)
+            .map((error) => `${error.message.slice(5)}`)
+            .join(' ')}`,
+        });
+      } else {
+        res.status(500).send({ message: 'Ошибка сервера' });
+      }
     });
 };
 
