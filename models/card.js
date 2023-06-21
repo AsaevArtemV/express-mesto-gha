@@ -13,11 +13,6 @@ const cardSchema = new Schema({
   link: {
     type: String,
     required: [true, 'Поле "link" должно быть заполнено'],
-    validate: {
-      // eslint-disable-next-line no-undef
-      validator: (v) => validator.isURL(v),
-      message: 'Некорректный URL',
-    },
   },
   owner: {
     type: Schema.Types.ObjectId,
