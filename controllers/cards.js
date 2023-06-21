@@ -3,8 +3,8 @@ const Card = require('../models/card');
 
 const getAllCards = (req, res) => {
   Card.find({})
-    .then((cards) => res.status(200).send(cards));
-    .catch(() => res.status(500).send({ message: 'Ошибка по умолчанию' }));
+    .then((cards) => res.status(200).send(cards))
+    .catch(() => res.status(500).send({ message: 'Ошибка сервера' }));
 };
 
 function createCard(req, res) {
