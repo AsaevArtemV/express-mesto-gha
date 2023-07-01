@@ -25,10 +25,6 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'Поле "email" должно быть заполнено'],
     unique: true,
-    validate: {
-      validator: validator.isEmail,
-      message: 'Неправильный формат почты',
-    },
   },
   password: {
     type: String,
