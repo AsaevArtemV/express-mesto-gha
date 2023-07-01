@@ -1,30 +1,41 @@
 const express = require('express');
-// eslint-disable-next-line import/no-extraneous-dependencies
 const mongoose = require('mongoose');
-// eslint-disable-next-line import/extensions
+const { errors } = require('celebrate');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const routes = require('./routes');
+const handleError = require('./middlewares/handeError');
+const { NotFoundError } = require('./errors/errors');
 
-const { PORT = 3000 } = process.env;
+const {
+  PORT = 3000,
+  DB_URL = 'mongodb://127.0.0.1:27017/mestodb',
+} = process.env;
 
-const app = express();
-
-mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
+mongoose.connect(DB_URL, {
   useNewUrlParser: true,
 });
 
-app.use(express.json());
+const app = express();
 
-app.use((req, res, next) => {
-  req.user = {
-    _id: '64918ff663cba42f31cab441',
-  };
+app.use(helmet());
 
-  next();
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 
+app.use(limiter);
+app.use(express.json());
 app.use(routes);
 
-app.listen(PORT, () => {
-  // eslint-disable-next-line no-console
-  console.log(`server is running on port ${PORT}`);
+app.use('*', () => {
+  throw new NotFoundError('Данная страница не найдена');
 });
+
+app.use(errors());
+app.use(handleError);
+
+app.listen(PORT);

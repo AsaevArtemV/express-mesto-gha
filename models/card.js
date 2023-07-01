@@ -1,6 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 const mangoose = require('mongoose');
-// eslint-disable-next-line import/no-extraneous-dependencies
 const { Schema } = require('mongoose');
 
 const cardSchema = new Schema({
@@ -24,7 +22,7 @@ const cardSchema = new Schema({
     type: [
       {
         type: Schema.Types.ObjectId,
-        reference: 'user',
+        ref: 'user',
       },
     ],
   },
