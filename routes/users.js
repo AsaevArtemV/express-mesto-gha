@@ -12,16 +12,6 @@ const validationСheck = require('../utils/validationСheck');
 router.get('/', getAllUsers);
 
 router.get(
-  '/:userId',
-  celebrate({
-    params: Joi.object().keys({
-      userId: Joi.string().alphanum().length(24).hex(),
-    }),
-  }),
-  getUserById,
-);
-
-router.get(
   '/me',
   celebrate({
     params: Joi.object().keys({
@@ -40,6 +30,16 @@ router.patch(
     }),
   }),
   updateUser,
+);
+
+router.get(
+  '/:userId',
+  celebrate({
+    params: Joi.object().keys({
+      userId: Joi.string().alphanum().length(24).hex(),
+    }),
+  }),
+  getUserById,
 );
 
 router.patch(
