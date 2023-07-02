@@ -79,7 +79,7 @@ const createUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new ValidationError(`Пожалуйста, проверьте правильность заполнения полей: ${Object.values(err.errors)
+        next(new ValidationError(`Проверьте правильность заполнения полей: ${Object.values(err.errors)
           .map((error) => `${error.message.slice(5)}`)
           .join(' ')}`));
       } else if (err.code === 11000) {

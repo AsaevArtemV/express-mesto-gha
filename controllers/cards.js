@@ -24,7 +24,7 @@ function createCard(req, res, next) {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new ValidationError(`Gроверьте правильность заполнения полей:
+        next(new ValidationError(`Проверьте правильность заполнения полей:
         ${Object.values(err.errors).map((error) => `${error.message.slice(5)}`).join(' ')}`));
       } else {
         next(err);
