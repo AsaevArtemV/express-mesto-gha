@@ -131,9 +131,9 @@ const updateAvatar = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        throw new ValidationError(`Проверьте правильность заполнения полей: ${Object.values(err.errors)
+        next(new ValidationError(`Проверьте правильность заполнения полей: ${Object.values(err.errors)
           .map((error) => `${error.message.slice(5)}`)
-          .join(' ')}`);
+          .join(' ')}`));
       } else {
         next(err);
       }

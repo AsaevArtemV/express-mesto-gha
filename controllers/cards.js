@@ -24,8 +24,8 @@ function createCard(req, res, next) {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        throw new ValidationError(`Gроверьте правильность заполнения полей:
-        ${Object.values(err.errors).map((error) => `${error.message.slice(5)}`).join(' ')}`);
+        next(new ValidationError(`Gроверьте правильность заполнения полей:
+        ${Object.values(err.errors).map((error) => `${error.message.slice(5)}`).join(' ')}`));
       } else {
         next(err);
       }
@@ -51,7 +51,7 @@ const deleteCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        throw new BadRequestError(`Карточки с указанным id: ${cardId} нет`);
+        next(new BadRequestError(`Карточки с указанным id: ${cardId} нет`));
       } else {
         next(err);
       }
@@ -79,7 +79,7 @@ const likeCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        throw new BadRequestError(`Карточки с указанным id: ${cardId} нет в базе данных`);
+        next(new BadRequestError(`Карточки с указанным id: ${cardId} нет в базе данных`));
       } else {
         next(err);
       }
@@ -107,7 +107,7 @@ const deleteLike = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        throw new BadRequestError(`Карточки с указанным id: ${cardId} нет в базе данных`);
+        next(new BadRequestError(`Карточки с указанным id: ${cardId} нет в базе данных`));
       } else {
         next(err);
       }
